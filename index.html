@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>03-lecture-data_wrangling</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		
+		<!-- Include buttons for opening and closing the notes canvas or the chalkboard -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="images/astemir-almov-265122-unsplash.jpg" data-state="dimbg_dark">
+				<!-- Front page -->
+					<h1>Urban Big Data Analytics</h1>
+					
+					<i>Class 3</i><br>
+					<i>Data Wrangling</i><br><br>
+					
+					<p>
+					<small> July 20, 2018<br><br>
+					
+					Instructor: <a href="http://andyhong.org" target="_blank">Andy Hong</a>, <i>PhD</i><br>
+					
+					Postdoctoral Research and Teaching Fellow<br>
+					School of Population and Public Health<br>
+					University of British Columbia
+					</small>
+					</p>
+				</section>
+				<section>
+				<!-- Slide 1 -->
+					<h2>Assignment 2 check in</h2>
+					<ul>
+						<li><a href="https://www.gapminder.org/tools-offline" target="_blank">Gapminder offline tool</a></li>
+						<li>If your country is not included, then just pick one country you like</li>
+						<li>If the export function doesn't work, just take a screen shot</li>
+					</ul>					
+				</section>
+				<section>
+				<!-- Slide 2 -->
+					<h2>Data wrangling</h2>
+				</section>
+				<section>
+				<!-- Slide 3 -->
+					<h2>What is data wrangling?</h2>
+					<img src="images/data_wrangling.png" height="550" style="float: left; margin-right: 100px">
+					<ul style="display: block">
+						<li>A process of turning raw data into a more appropriate format</li><br>
+						<li>Data cleaning</li>
+						<li>Data munging</li>
+						<li>Manipulation</li>
+						<li>Transformation</li>
+						<li>Janitor work</li>
+					</ul>
+				</section>
+				<section>
+				<!-- Slide 4 -->
+					<h2>Life of data scientists</h2>
+					<img src="images/data_scientist_time.jpg" height="550">
+				</section>
+				<section>
+				<!-- Slide 5 -->	
+					<h2>Clean data are rare</h2>
+					<img src="images/clean_data.png" height="500">
+				</section>
+				<section>
+				<!-- Slide 6 -->	
+					<h2>Data come in a messy form</h2>
+					<img src="images/messy_data.jpg" height="500">
+				</section>
+				<section>
+				<!-- Slide 7 -->	
+					<h2>Example - Twitter data</h2>
+					<div style="position:relative; width:1000px; height:550px; margin:0 auto;">
+					  <img class="fragment fade-out" data-fragment-index="0" src="images/twitter_data1.png" style="position:absolute;top:0;left:0;" />
+					  <img class="fragment fade-in" data-fragment-index="0" src="images/twitter_data2.png" style="position:absolute;top:0;left:0;" />
+					</div>
+				</section>
+				<section data-background-image="images/principles.jpg">
+				<!-- Slide 8 -->
+				<div style="text-align: left;">
+					<h2><font color="black">Principles of data wrangling</font></h2><br><br><br><br><br><br>
+				</div>
+				</section>
+				<section style="text-align: top">
+				<!-- Slide 9 -->
+					<h2>Four principles</h2>
+					<ul>
+						<li class="fragment fade-up"><font color="red"><b>N</b></font>ever touch the original data</li>
+						<li class="fragment fade-up"><font color="red"><b>I</b></font>nspect data types</li>
+						<li class="fragment fade-up"><font color="red"><b>C</b></font>heck each step</li>
+						<li class="fragment fade-up"><font color="red"><b>E</b></font>xamine missing data</li>
+						<li class="fragment fade-right"><font color="orange"><b>R</b></font>emove weird data</li>
+					</ul>
+				</section>
+				<section>
+				<!-- Slide 10 -->
+					<h3><font color="red"><b>N</b></font>ever touch the original data</h3>
+				    <img src="images/principle1.gif" height="550">
+				</section>
+				<section>
+				<!-- Slide 11 -->
+					<h2><font color="red"><b>I</b></font>nspect data types</h2>
+					<img src="images/principle2.png" height="550">
+				</section>		
+				<section>
+				<!-- Slide 12 -->
+					<h2><font color="red"><b>C</b></font>heck each step</h2>
+					<img src="images/principle3.png" height="550">
+				</section>
+				<section>
+				<!-- Slide 13 -->
+					<h2><font color="red"><b>E</b></font>xamine missing data</h2>
+					<img src="images/principle4.png" height="550">
+				</section>
+				<section>
+				<!-- Slide 14 -->
+					<h2><font color="orange"><b>R</b></font>emove weird data</h2>
+					<img src="images/principle5.png" height="550">
+				</section>
+				<section>
+				<!-- Slide 15 -->
+					<h2>Data wrangling in R</h2>
+				</section>
+				<section>
+				<!-- Slide 16 -->
+					<h2>Common procedures</h2>
+					<ol>
+						<li class="fragment fade-up">Select specific columns: <font color="#378cdb"><b>select()</b></font></li>
+						<li class="fragment fade-up">Select specific rows: <font color="#378cdb"><b>filter()</b></font></li>
+						<li class="fragment fade-up">Create new columns: <font color="#378cdb"><b>mutate()</b></font></li>
+						<li class="fragment fade-up">Change the unit of analysis: <font color="#378cdb"><b>summarise()</b></font></li>
+						<li class="fragment fade-up">Aggregate data by certain groups: <font color="#378cdb"><b>group_by()</b></font></li>
+					</ol>
+				</section>
+				<section>
+				<!-- Slide 17 -->
+					<h2>Vancouver crime data demo</h2>
+					<ol>
+						<li>Create a group session folder first </li>
+						<li>Windows: <small>My Documents\vsp_bigdata\group_session\03-lecture</small></li>
+						<li>Mac: <small>Documents/vsp_bigdata/group_session/03-lecture</small></li>
+					</ol>
+					
+				</section>
+				<section>
+				<!-- Slide 18 -->
+					<h2>Vancouver crime data demo</h2>
+					<ol>
+						<li><a href="http://urbanbigdata.github.io/03-lecture-data_wrangling/group-session/vancouver_crime_2003-2018.csv" download>Download the CSV file</a></li>
+						<li>Move the CSV file to the following folder: <small>vsp_bigdata/group_session/03-lecture</small></li>
+						<li>Run Exploratory</li>
+					</ol>
+				</section>
+				<section>
+				<!-- Slide 19 -->	
+					<h3>Class 3 - Group Session</h3>
+					<a href="https://urbanbigdata.github.io/03-lecture-data_wrangling/group-session/GroupSession_03.html" target="_blank">Instruction</a>
+				</section>
+				<section>
+				<!-- Slide 20 -->	
+					<h3>Any questions?</h3>
+					For all the course materials, go to <a href="https://urbanbigdata.github.io/" target="_blank">urbanbigdata.github.io</a>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				slideNumber : true,
+				//previewLinks: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				
+				chalkboard: { 
+					// optionally load pre-recorded chalkboard drawing from file
+					//src: "chalkboard.json",
+					color: [ 'rgba(0,0,255,1)', 'rgba(255,255,255,0.5)' ],
+					background: [ 'rgba(127,127,127,.1)' , 'reveal.js-plugins/chalkboard/img/blackboard.png' ]
+					
+				},
+				  
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/chalkboard/chalkboard.js' }
+				],
+				
+				keyboard: {
+				    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+				    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+				    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+				     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+				    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+				}
+			});
+		</script>
+	</body>
+</html>
