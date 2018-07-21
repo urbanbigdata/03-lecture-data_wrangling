@@ -182,16 +182,26 @@ mutate(
   HOUR = as.numeric(HOUR),
   MINUTE = as.numeric(MINUTE)
 )</code></pre>
-<p>Some data are not complete. For example, there are only about 7 months for the year 2018. So we need to restrict our data from 2003 to 2017 to get the complete picture.</p>
-<p>Let’s filter the data from to 2003 to 2017.</p>
-<pre class="r"><code># Filter data from 2003 to 2017
-filter(between(YEAR, 2003, 2017))</code></pre>
+<p>Some data are not complete. For example, there are only about 7 months for the year 2018. Also, usually quality of data for the first year of data collection is not very consistent. So we will only use data from 2004 to 2017 for the purpose of this exercise.</p>
+<p>Let’s filter the data from to 2004 to 2017.</p>
+<pre class="r"><code># Filter data from 2004 to 2017
+filter(between(YEAR, 2004, 2017))</code></pre>
 <p>The next step to regroup the time of day varaible (HOUR).</p>
 <pre class="r"><code># Regroup HOUR to four time groupings
 mutate(
   time_of_day = 
     cut(HOUR, 
         breaks=c(0, 6, 12, 18, 23), 
+        labels=c(&quot;Dawn&quot;,&quot;Morning&quot;,&quot;Afternoon&quot;,&quot;Night&quot;)
+        )
+)</code></pre>
+<p>Do you see anything strange? Can you tell what’s going on with the new variable?<br> As you can see, the new <code>time_of_day</code> variable has missing data <code>NA</code>. However, the original data <code>HOUR</code> has no missing data. What’s going on? Well.. it turns out that the <code>cut</code> function does not include the lowest break value. In order to include 0 in the break value, you will need to start the break value lower than 0.</p>
+<p>This is the correct way of cutting the data.</p>
+<pre class="r"><code># Repeat the same code above but replace the initial value with -1.
+mutate(
+  time_of_day = 
+    cut(HOUR, 
+        breaks=c(-1, 6, 12, 18, 23), 
         labels=c(&quot;Dawn&quot;,&quot;Morning&quot;,&quot;Afternoon&quot;,&quot;Night&quot;)
         )
 )</code></pre>
