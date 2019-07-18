@@ -32,28 +32,28 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Instruction
 
 ### 1. Synopsis
-The purpose of this group session is to get you familiar with **data wrangling**. You will explore a crime dataset from the Vancouver Open Data Catalogue. We will first explore how crime rate has changed over time. Then, we will explore four specific variables in the dataset, namely crime type, neighborhood, season, and time of day. Crime type and neighborhood are already in the dataset, but you will need to **wrangle** the other two variables to complete your analysis. <br>
+The purpose of this group session is to get you familiar with **data wrangling**. You will explore a crime dataset from the Vancouver Open Data Catalogue. We will first explore how the total volume of crime has changed over time. Then, we will explore four specific variables in the dataset, namely crime type, neighborhood, season, and time of day. Crime type and neighborhood are already in the dataset, but you will need to **wrangle** the other two variables to complete your analysis. <br>
 
-Remember, the general approach to data science is to understand relationships among variables. In the Gapminder example, we exmaine the relationship between income and life expectancy. In other words, we are almost always interested in understanding how X affects Y. In this exercise, we are interested in looking at the relationship betwen some possible factors (X) and crime rates (Y). 
+Remember, the general approach to data science is to understand relationships among variables. In the Gapminder example, we exmained the relationship between income and life expectancy. In other words, we are almost always interested in understanding how X affects Y. In this exercise, we are interested in looking at the relationship betwen some possible factors (X) and total crime volume (Y). 
 
 ### 2. Each group will explore the relationship between X (independent variable) and Y (dependent variable)
 
- + Group 1: Relationship between crime type and crime rates
- + Group 2: Relationship between crime type and crime rates
- + Group 3: Relationship between neighborhood and crime rates
- + Group 4: Relationship between neighborhood and crime rates
- + Group 5: Relationship between season and crime rates
- + Group 6: Relationship between season and crime rates
- + Group 7: Relationship between time of day and crime rates
- + Group 8: Relationship between time of day and crime rates
- + Group 9: Relationship between season and crime rates
- + Group 10: Relationship between season and crime rates
+ + Group 1: Relationship between crime type and total crime volume
+ + Group 2: Relationship between crime type and total crime volume
+ + Group 3: Relationship between neighborhood and total crime volume
+ + Group 4: Relationship between neighborhood and total crime volume
+ + Group 5: Relationship between season and total crime volume
+ + Group 6: Relationship between season and total crime volume
+ + Group 7: Relationship between time of day and total crime volume
+ + Group 8: Relationship between time of day and total crime volume
+ + Group 9: Relationship between season and total crime volume
+ + Group 10: Relationship between season and total crime volume
  
 ### 3. Explore each factor
  + **Crime type**: What are the most frequent crime types?  
- + **Neighborhood**: Which neighborhood has the highest rate of crime?
- + **Season**: Does the seasonal difference affect crime rate?
- + **Time of day** Does the time of day affect crime rate?
+ + **Neighborhood**: Which neighborhood has the highest crime volumee?
+ + **Season**: Does the seasonal difference affect the total crime volume?
+ + **Time of day** Does the time of day affect the total crime volume?
 
 ### 4. You will need to filter and recode some variables
 
@@ -152,12 +152,12 @@ Once you are done with data wrangling, it's easy to explore data by visualizing 
  
  + For Color By, choose the factor you want to explore 
  
- + For example, choose `TYPE` to explore the effect of crime type on crime rates
+ + For example, choose `TYPE` to explore the effect of crime type on total crime volume
 
 
 You can also use the bar chart to visualize frequency
 
- + In Exploratory, go to Viz, and select the plot type as `Bar`
+ + In Exploratory, go to Chart, and select the plot type as `Bar`
  
  + On the X Axis, choose `TYPE`
  
