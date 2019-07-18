@@ -1,0 +1,224 @@
+---
+title: 'Urban Big Data Analytics - Lecture 3 Group Session: Vancouver open data'
+author: "Andy Hong"
+date: "July 19, 2019"
+output:
+  html_document:
+    css: my_styles.css
+  pdf_document: default
+  word_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+## Prerequisites
+
+* Create a group session folder first
+  * Windows: My Documents/vsp_bigdata/group_session/03-lecture
+  * Mac: Documents/vsp_bigdata/group_session/03-lecture
+
+* Download the <a href="http://urbanbigdata.github.io/03-lecture-data_wrangling/group-session/vancouver_crime_2003-2018.csv" download> Vancouver Crime CSV file </a>
+
+* Move the CSV file to the following folder: vsp_bigdata/group_session/03-lecture
+
+* Run Exploratory
+
+
+
+## Instruction
+
+### 1. Synopsis
+The purpose of this group session is to get you familiar with **data wrangling**. You will explore a crime dataset from the Vancouver Open Data Catalogue. We will first explore how crime rate has changed over time. Then, we will explore four specific variables in the dataset, namely crime type, neighborhood, season, and time of day. Crime type and neighborhood are already in the dataset, but you will need to **wrangle** the other two variables to complete your analysis. <br>
+
+Remember, the general approach to data science is to understand relationships among variables. In the Gapminder example, we exmaine the relationship between income and life expectancy. In other words, we are almost always interested in understanding how X affects Y. In this exercise, we are interested in looking at the relationship betwen some possible factors (X) and crime rates (Y). 
+
+### 2. Each group will explore the relationship between X (independent variable) and Y (dependent variable)
+
+ + Group 1: Relationship between crime type and crime rates
+ + Group 2: Relationship between crime type and crime rates
+ + Group 3: Relationship between neighborhood and crime rates
+ + Group 4: Relationship between neighborhood and crime rates
+ + Group 5: Relationship between season and crime rates
+ + Group 6: Relationship between season and crime rates
+ + Group 7: Relationship between time of day and crime rates
+ + Group 8: Relationship between time of day and crime rates
+ + Group 9: Relationship between season and crime rates
+ + Group 10: Relationship between season and crime rates
+ 
+### 3. Explore each factor
+ + **Crime type**: What are the most frequent crime types?  
+ + **Neighborhood**: Which neighborhood has the highest rate of crime?
+ + **Season**: Does the seasonal difference affect crime rate?
+ + **Time of day** Does the time of day affect crime rate?
+
+### 4. You will need to filter and recode some variables
+
+First you need to convert character variables to numeric variables.
+
+```{r, eval=FALSE}
+
+# Make sure to convert character to numeric
+mutate(
+  YEAR = as.numeric(YEAR),
+  MONTH = as.numeric(MONTH),
+  DAY = as.numeric(DAY),
+  HOUR = as.numeric(HOUR),
+  MINUTE = as.numeric(MINUTE)
+)
+
+```
+
+Some data are not complete. For example, there are only about 7 months for the year 2018. Also, usually quality of data for the first year of data collection is not very consistent. So we will only use data from 2004 to 2017 for the purpose of this exercise.
+
+Let's filter the data from to 2004 to 2017.
+```{r, eval=FALSE}
+
+# Filter data from 2004 to 2017
+filter(between(YEAR, 2004, 2017))
+
+```
+
+
+The next step to regroup the time of day varaible (HOUR).
+```{r, eval=FALSE}
+
+# Regroup HOUR to four time groupings
+mutate(
+  time_of_day = 
+    cut(HOUR, 
+        breaks=c(0, 6, 12, 18, 23), 
+        labels=c("Dawn","Morning","Afternoon","Night")
+        )
+)
+
+```
+
+Do you see anything strange? Can you tell what's going on with the new variable?<br>
+As you can see, the new `time_of_day` variable has missing data `NA`. However, the original data `HOUR` has no missing data. What's going on? Well.. it turns out that the `cut` function does not include the lowest break value. In order to include 0 in the break value, you will need to start the break value lower than 0.
+
+This is the correct way of cutting the data.
+```{r, eval=FALSE}
+
+# Repeat the same code above but replace the initial value with -1.
+mutate(
+  time_of_day = 
+    cut(HOUR, 
+        breaks=c(-1, 6, 12, 18, 23), 
+        labels=c("Dawn","Morning","Afternoon","Night")
+        )
+)
+
+```
+
+
+The next step to regroup the month varaible (MONTH).
+
+```{r, eval=FALSE}
+
+# Regroup MONTH to four seasons
+mutate(
+  season = 
+    recode(MONTH, 
+          "1" = "Winter",
+          "2" = "Winter",
+          "3" = "Spring",
+          "4" = "Spring",
+          "5" = "Spring",
+          "6" = "Summer",
+          "7" = "Summer",
+          "8" = "Summer",
+          "9" = "Fall",
+          "10" = "Fall",
+          "11" = "Fall",
+          "12" = "Winter"
+          )
+)
+
+```
+
+### 5. Use Exploratory to explore each factor
+
+Once you are done with data wrangling, it's easy to explore data by visualizing them.
+
+ + In Exploratory, go to Chart, and select the plot type as `Area`
+ 
+ + On the X Axis, choose `# YEAR`
+ 
+ + On the Y Axis, choose `# Number of rows`
+ 
+ + For Color By, choose the factor you want to explore 
+ 
+ + For example, choose `TYPE` to explore the effect of crime type on crime rates
+
+
+You can also use the bar chart to visualize frequency
+
+ + In Exploratory, go to Viz, and select the plot type as `Bar`
+ 
+ + On the X Axis, choose `TYPE`
+ 
+ + On the Y Axis, choose `# Number of rows`
+ 
+ + For Color By, choose other factors you want to explore 
+ 
+ + For example, choose `time_of_day` to explore the effect of different times on crime rates for different types of crime
+
+### 6. <font color="red">[Advanced Material]</font> Implementation of the Exploratory steps in R studio
+
+You can do exactly the same visualizations using R codes. If you are a beginner R user, this will be very complicated and unnecessarily difficult. But if you are familiar with R, this will be a piece of cake for you. 
+
+If you get lost, don't worry. This is for more experienced R users. You will do just fine without these additional steps. The goal is to get you exposed to more R coding environment, and you are expected to get lost in the beginning as R has a very high learning curve. 
+
+Replicating the Exploratory steps in R
+
++ To replicate what we've just done in Exploratory, you will need to export the R script and copy the codes.
+
++ Use the base R code to implement the Exploratory steps: <a href="https://urbanbigdata.github.io/03-lecture-data_wrangling/group-session/GroupSession_03.R" target="_blank">Replication R codes</a>
+
++ Open the R codes in R Studio
+
++ Plug in the R scrips copied from Exploratory
+
++ In front of "exploratory::read_delim_file()", insert "df = ". The first couple of lines should look something like this.
+
+```{r, eval=F}
+
+# Steps to produce the output
+df = exploratory::read_delim_file("/Users/andyhong/Documents/vsp_bigdata/group_session/03-lecture/vancouver_crime_2003-2018.csv" , ",", quote = "\"", skip = 0 , col_names = TRUE , na = c('','NA') , locale=readr::locale(encoding = "UTF-8", decimal_mark = "."), trim_ws = TRUE , progress = FALSE) 
+  
+```
+
+
+ 
+## Tell your story
+
+ + Pick one person in your group to present your story. Each group has three minutes to present.
+ 
+ + All group members should work on the data wrangling and exploration.
+ 
+ + However, the presenter should have the final plot ready to share with the classroom.
+ 
+ + Please export the chart as PNG and send the PNG file to the course email (urbanbigdata2019@gmail.com). 
+
+ + <font color="red"><b>[IMPORTANT]</b></font> Please use the following email title format: <br>
+ `VSP BigData [lecture number] - [group number] - [presenter name]` <br>
+ ex), `VSP BigData Lecture 3 - Group 1 - Bill Gates` <br>
+ 
+<br><br><br>
+ 
+
+  
+
+
+
+
+ 
+ 
+
+
+
+
